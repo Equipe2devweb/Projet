@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Game Forms</title>
+    <link rel="stylesheet" type="text/css" href="GameForms.css">
+</head>
+
+<body>
+    <form id="gameForm" class="level" action="" method="POST">
+        <h1 id="levelTitle"></h1>
+        <p id="levelDescription"></p>
+        <p id="lettersToArrange"></p>
+        <input type="text" id="inputField" name="input" required>
+
+        <button type="submit" name="submit">Submit</button>
+        <button id="giveUpButton" type="button">I Give up!</button>
+        <input type="hidden" id="levelIndex" value="0">
+    </form>
+
+    <script src="GameJava.js" defer></script>
+
+</body>
+
+</html>
