@@ -32,6 +32,7 @@ return [
     ]
 ];
 
+
 // Function to generate a random string of given length
 function generateRandomString($length)
 {
