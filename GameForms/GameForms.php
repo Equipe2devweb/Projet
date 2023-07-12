@@ -19,10 +19,18 @@
         // Check if the user input matches the expected answer
         $expectedAnswer = $level['expectedAnswer']; // Get the correct expected answer for the level
         $userInputString = implode('', $userInput); // Convert user's input array to a string
-        $isCorrect = ($userInputString === $expectedAnswer);
+        $isCorrect = (strcasecmp($userInputString, $expectedAnswer) === 0);
 
         // Display the result message based on correctness
         $resultMessage = $isCorrect ? 'Congratulations, you got it right!' : 'Sorry, try again!';
+        
+        /* Check if all levels are completed successfully
+        if ($levelIndex === count($levels) - 1 && $isCorrect) {
+            echo "<h1>Congratulations! You completed all levels successfully.</h1>";
+            echo "<p>Well done!</p>";
+            echo "<button onclick=\"location.href='GameForms.php'\">Play Again</button>";
+            exit; // Stop further processing
+        }*/
     }
     ?>
 

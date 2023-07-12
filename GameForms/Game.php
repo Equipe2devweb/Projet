@@ -10,9 +10,9 @@ $expectedAnswer = $_POST['expectedAnswer'] ?? '';
 $userInputString = implode('', $userInput);
 
 // Check if the user input matches the expected answer for the current level
-if (strtolower($userInputString) === strtolower($expectedAnswer)) {
+if (strcasecmp($userInputString, $expectedAnswer) === 0) {
     // User succeeded in the current level
-    if ($levelIndex === count($levels) - 1) {
+    if ($levelIndex === count($levels) -1 ) {
         // User completed all levels
         echo "<h1>Congratulations! You completed all levels successfully.</h1>";
         echo "<p>Well done!</p>";
@@ -23,7 +23,7 @@ if (strtolower($userInputString) === strtolower($expectedAnswer)) {
         echo "<h1>Success!</h1>";
         echo "<p>Congratulations! You completed the level successfully.</p>";
         echo "<p>Proceed to the next level.</p>";
-        echo "<form action=\"GameForms.php\" method=\"post\">";
+        echo "<form action=\"Game.php\" method=\"post\">";
         echo "<input type=\"hidden\" name=\"levelIndex\" value=\"$nextLevelIndex\">";
         echo "<button type=\"submit\">Next Level</button>";
         echo "</form>";
@@ -35,7 +35,7 @@ if (strtolower($userInputString) === strtolower($expectedAnswer)) {
     echo "<p>Please try again.</p>";
     echo "<p>Expected Answer: " . $expectedAnswer . "</p>";
     echo "<p>User Input: " . $userInputString . "</p>";
-    echo "<form action=\"GameForms.php\" method=\"post\">";
+    echo "<form action=\"Game.php\" method=\"post\">";
     echo "<input type=\"hidden\" name=\"levelIndex\" value=\"$levelIndex\">";
     echo "<button type=\"submit\">Try Again</button>";
     echo "</form>";

@@ -2,7 +2,7 @@
 function generateRandomLetters($length)
 {
     $letters = "";
-    $possibleLetters = "abcdefghijklmnopqrstuvwxyz";
+    $possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     for ($i = 0; $i < $length; $i++) {
         $letters .= $possibleLetters[rand(0, strlen($possibleLetters) - 1)];
@@ -11,38 +11,122 @@ function generateRandomLetters($length)
     return $letters;
 }
 
+function generateRandomNumbers($length)
+{
+    $numbers = "";
+    $possibleNumbers = "0123456789";
+
+    for ($i = 0; $i < $length; $i++) {
+        $numbers .= $possibleNumbers[rand(0, strlen($possibleNumbers) - 1)];
+    }
+
+    return $numbers;
+}
+
+function sortLettersDescending($letters)
+{
+    $sortedLetters = str_split($letters);
+
+    usort($sortedLetters, function ($a, $b) {
+        return strcasecmp($a, $b);
+    });
+
+    return implode('', array_reverse($sortedLetters));
+}
+
 function sortLettersAscending($letters)
 {
     $sortedLetters = str_split($letters);
-    sort($sortedLetters);
+
+    usort($sortedLetters, function ($a, $b) {
+        return strcasecmp($a, $b);
+    });
+
     return implode('', $sortedLetters);
+}
+
+function sortNumbersAscending($numbers)
+{
+    $sortedNumbers = str_split($numbers);
+
+    usort($sortedNumbers, function ($a, $b) {
+        return $a - $b;
+    });
+
+    return implode('', $sortedNumbers);
+}
+
+function sortNumbersDescending($numbers)
+{
+    $sortedNumbers = str_split($numbers);
+
+    usort($sortedNumbers, function ($a, $b) {
+        return $a - $b;
+    });
+
+    return implode('', array_reverse($sortedNumbers));
 }
 
 $levels = [
     [
-        'title' => "Level 1 - Arrange Letters in Ascending Order",
+        'title' => "Niveau de jeu 1 - Arrangez 6 lettres dans l’ordre croissant",
         'randomLetters' => generateRandomLetters(6),
-        'numInputBoxes' => 6
-
-        
-    ],
-
-    [
-        'title' => "Level 2 - Arrange Letters in Ascending Order",
-        'randomLetters' => generateRandomLetters(8),
-        'numInputBoxes' => 8
+        'numInputBoxes' => 6,
+        'expectedAnswer' => '', // Will be set dynamically in the loop
     ],
     [
-        'title' => "Level 3 - Arrange Letters in Ascending Order",
-        'randomLetters' => generateRandomLetters(10),
-        'numInputBoxes' => 10
-    ]
-    ];
-
+        'title' => "Niveau de jeu 2 - Arrangez 6 lettres dans l’ordre décroissant",
+        'randomLetters' => generateRandomLetters(6),
+        'numInputBoxes' => 6,
+        'expectedAnswer' => '', // Will be set dynamically in the loop
+    ],
+    [
+        'title' => "Niveau de jeu 3 - Arrangez 6 nombres dans l’ordre croissant",
+        'randomLetters' => generateRandomNumbers(6),
+        'numInputBoxes' => 6,
+        'expectedAnswer' => '', // Will be set dynamically in the loop
+    ],
+    [
+        'title' => "Niveau de jeu 4 - Arrangez 6 nombres dans l’ordre décroissant",
+        'randomLetters' => generateRandomNumbers(6),
+        'numInputBoxes' => 6,
+        'expectedAnswer' => '', // Will be set dynamically in the loop
+    ],
+    [
+        'title' => "Niveau de jeu 5 - Identifier la première et la dernière lettre d’un ensemble de 6 lettres",
+        'randomLetters' => generateRandomLetters(6),
+        'numInputBoxes' => 2,
+        'expectedAnswer' => '', // Will be set dynamically in the loop
+    ],
+    [
+        'title' => "Niveau de jeu 6 - Identifier le plus petit nombre et le plus grand nombre d’un ensemble de 6 nombres",
+        'randomLetters' => generateRandomNumbers(6),
+        'numInputBoxes' => 2,
+        'expectedAnswer' => '', // Will be set dynamically in the loop
+    ],
+];
 
 foreach ($levels as &$level) {
-    $level['expectedAnswer'] = sortLettersAscending($level['randomLetters']);
+    if (strpos($level['title'], "Niveau de jeu 1") !== false) {
+        $level['expectedAnswer'] = sortLettersAscending($level['randomLetters']);
+    } elseif (strpos($level['title'], "Niveau de jeu 2") !== false) {
+        $level['expectedAnswer'] = sortLettersDescending($level['randomLetters']);
+    } elseif (strpos($level['title'], "Niveau de jeu 3") !== false) {
+        $level['expectedAnswer'] = sortNumbersAscending($level['randomLetters']);
+    } elseif (strpos($level['title'], "Niveau de jeu 4") !== false) {
+        $level['expectedAnswer'] = sortNumbersDescending($level['randomLetters']);
+    } elseif (strpos($level['title'], "Niveau de jeu 5") !== false) {
+        $randomLettersArray = str_split($level['randomLetters']);
+        $randomLettersArray = array_map('strtolower', $randomLettersArray); // Convert letters to lowercase
+        sort($randomLettersArray, SORT_STRING); // Sort the letters in ascending order
+        $level['expectedAnswer'] = $randomLettersArray[0] . $randomLettersArray[count($randomLettersArray) - 1];
+    } elseif (strpos($level['title'], "Niveau de jeu 6") !== false) {
+        $randomLettersArray = str_split($level['randomLetters']);
+        $level['expectedAnswer'] = min($randomLettersArray) . max($randomLettersArray);
+    }
 }
-
 return $levels;
 ?>
+
+
+
