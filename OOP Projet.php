@@ -106,7 +106,6 @@ class DatabaseConnection
     
         $sqlCreateTableQuery = "CREATE TABLE IF NOT EXISTS $tableName (
             otherTableId INT(6) UNSIGNED,
-            score INT,
             life INT DEFAULT 6,
             flag1 BOOLEAN,
             flag2 BOOLEAN,
@@ -126,7 +125,7 @@ class DatabaseConnection
 {
     $tableName = 'score';
 
-    $sqlQuery = "SELECT score, life, flag1, flag2, flag3, flag4, flag5, flag6 FROM $tableName WHERE otherTableId = '$userId'";
+    $sqlQuery = "SELECT life, flag1, flag2, flag3, flag4, flag5, flag6 FROM $tableName WHERE otherTableId = '$userId'";
 
     $result = $this->connection->query($sqlQuery);
 
@@ -137,8 +136,7 @@ class DatabaseConnection
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $score = $row['score'];
-        $life = $row['life'];
+               $life = $row['life'];
         $flag1 = $row['flag1'];
         $flag2 = $row['flag2'];
         $flag3 = $row['flag3'];
@@ -151,7 +149,6 @@ class DatabaseConnection
 
         // Return the retrieved data
         return [
-            'score' => $score,
             'life' => $life,
             'flag1' => $flag1,
             'flag2' => $flag2,
@@ -166,7 +163,7 @@ class DatabaseConnection
     }
 }
 
-public function insertScoreData($username, $score, $life, $flag1, $flag2, $flag3, $flag4, $flag5, $flag6)
+public function insertScoreData($username, $life, $flag1, $flag2, $flag3, $flag4, $flag5, $flag6)
 {
     $userId = $this->getUserId($username);
 
@@ -202,8 +199,8 @@ public function insertScoreData($username, $score, $life, $flag1, $flag2, $flag3
     }
 
     // Insert the score data into the database
-    $sqlInsertQuery = "INSERT INTO score (otherTableId, score, life, flag1, flag2, flag3, flag4, flag5, flag6) 
-                       VALUES ('$userId', '$score', '$life', '$flag1', '$flag2', '$flag3', '$flag4', '$flag5', '$flag6')";
+    $sqlInsertQuery = "INSERT INTO score (otherTableId, life, flag1, flag2, flag3, flag4, flag5, flag6) 
+                       VALUES ('$userId', '$life', '$flag1', '$flag2', '$flag3', '$flag4', '$flag5', '$flag6')";
 
     if ($this->connection->query($sqlInsertQuery) === FALSE) {
         echo "Failed to insert data: " . $this->connection->error;
@@ -229,7 +226,7 @@ function selectDatabase($database){
 
     public function displayUserDataWithScore()
     {
-        $sqlQuery = "SELECT users.id, users.username, score.score, score.life, score.flag1, score.flag2, score.flag3, score.flag4, score.flag5, score.flag6
+        $sqlQuery = "SELECT users.id, users.username, score.life, score.flag1, score.flag2, score.flag3, score.flag4, score.flag5, score.flag6
                      FROM users
                      INNER JOIN score ON users.id = score.otherTableId";
     
@@ -256,7 +253,6 @@ function selectDatabase($database){
             echo "<tr>";
             echo "<td>{$item['id']}</td>";
             echo "<td>{$item['username']}</td>";
-            echo "<td>{$item['score']}</td>";
             echo "<td>{$item['life']}</td>";
             echo "<td>{$item['flag1']}</td>";
             echo "<td>{$item['flag2']}</td>";
@@ -308,7 +304,7 @@ $flag4 = false;
 $flag5 = false;
 $flag6 = false;
 
-$dbConnection->insertScoreData($username, $score, $life, $flag1, $flag2, $flag3, $flag4, $flag5, $flag6);
+$dbConnection->insertScoreData($username, $life, $flag1, $flag2, $flag3, $flag4, $flag5, $flag6);
 
 $dbConnection->displayUserDataWithScore();
 ?>
