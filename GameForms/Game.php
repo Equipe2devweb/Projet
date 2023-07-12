@@ -12,7 +12,7 @@ $userInputString = implode('', $userInput);
 // Check if the user input matches the expected answer for the current level
 if (strcasecmp($userInputString, $expectedAnswer) === 0) {
     // User succeeded in the current level
-    if ($levelIndex === count($levels) -1 ) {
+    if ($levelIndex == count($levels) -1 ) {
         // User completed all levels
         echo "<h1>Congratulations! You completed all levels successfully.</h1>";
         echo "<p>Well done!</p>";

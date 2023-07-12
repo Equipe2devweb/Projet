@@ -35,6 +35,7 @@
     ?>
 
     <form id="gameForm" class="level" action="Game.php" method="POST">
+
         <h1 id="levelTitle"><?php echo $level['title']; ?></h1>
         <p id="levelDescription">Instructions: Arrange the given characters/numbers according to the specified order.</p>
         
