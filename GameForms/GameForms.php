@@ -34,6 +34,15 @@
             exit; // Stop further processing
         }*/
     }
+
+    if (isset($_POST['giveUp'])) {
+        $giveUp = true;
+        echo "<h1>Partie incomplète (partie abandonnée ou compte utilisateur déconnecté: cancel, time-out ou sign-out)</h1>";
+        echo "<p>Le joueur a abandonné la partie de jeu en cours.</p>";
+        echo "<p>Partie terminée.</p>";
+    } else {
+        $giveUp = false;
+    }
     ?>
 
     <form id="gameForm" class="level" action="Game.php" method="POST">
@@ -55,14 +64,19 @@
 
         <p id="lettersToArrange"><?php echo $randomLetters; ?></p> <!-- Display random letters before user input -->
         
-        <?php for ($i = 0; $i < $numInputBoxes; $i++): ?>
-        <input type="text" name="input[]" required>
-        <?php endfor; ?>
+        <?php if (!$giveUp): ?>
+            <?php for ($i = 0; $i < $numInputBoxes; $i++): ?>
+                <input type="text" name="input[]" required>
+            <?php endfor; ?>
+        <?php endif; ?>
         
         <input type="hidden" id="levelIndex" name="levelIndex" value="<?php echo $levelIndex; ?>">
         <input type="hidden" name="expectedAnswer" value="<?php echo $level['expectedAnswer']; ?>"> <!-- Add hidden input for expected answer -->
-        <button type="submit" name="submit">Submit</button>
-        <button id="giveUpButton" type="button">I Give Up!</button>
+        <?php if (!$giveUp): ?>
+            <button type="submit" name="submit">Submit</button>
+            <button id="giveUpButton" type="submit" name="giveUp" formnovalidate>I Give Up!</button>
+        <?php endif; ?>
     </form>
 </body>
 </html>
+
