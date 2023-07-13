@@ -34,21 +34,38 @@ p {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
   width: 100%;
 }
 
-.top-left,
-.top-right {
-  width: 50%;
-}
-
 .top-left {
-  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 10px;
 }
 
 .top-right {
-  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+
+.top-left label,
+.top-right label {
+  margin-right: 10px;
+}
+
+.top-left input,
+.top-right input {
+  width: 100%; /* Full width of the respective box */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 input[type="text"],
